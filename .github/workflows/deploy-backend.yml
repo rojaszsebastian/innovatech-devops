@@ -2,7 +2,7 @@ name: CI/CD Innovatech Backend
 
 on:
   push:
-    branches: [ deploy ]  # Se activa estrictamente al hacer push en la rama deploy (Exigencia de la Rúbrica)
+    branches: [ deploy ]
 
 jobs:
   build-and-push:
@@ -29,7 +29,7 @@ jobs:
           ECR_REPOSITORY: innovatech-backend
           IMAGE_TAG: latest
         run: |
-          # Compila el Dockerfile local de la carpeta actual y lo sube a tu repositorio de ECR
+          cd backend
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
@@ -55,5 +55,5 @@ jobs:
               "docker pull ${{ secrets.ECR_REGISTRY }}/innovatech-backend:latest",
               "docker stop innovatech-backend || true",
               "docker rm innovatech-backend || true",
-              "docker run -d --name innovatech-backend -p 8080:8080 -e SPRING_DATASOURCE_URL=jdbc:postgresql://172.31.17.92:5432/innovatech -e SPRING_DATASOURCE_USERNAME=postgres -e SPRING_DATASOURCE_PASSWORD=postgres ${{ secrets.ECR_REGISTRY }}/innovatech-backend:latest"
+              "docker run -d --name innovatech-backend -p 8080:8080 ${{ secrets.ECR_REGISTRY }}/innovatech-backend:latest"
             ]}'
