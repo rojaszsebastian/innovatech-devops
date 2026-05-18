@@ -1,0 +1,51 @@
+services:
+
+  postgres-db:
+    image: postgres:16-alpine
+    container_name: innovatech-db
+
+    environment:
+      POSTGRES_DB: innovatech
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+
+    build: ./backend
+
+    container_name: innovatech-backend
+
+    ports:
+      - "8080:8080"
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/innovatech
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+
+    depends_on:
+      - postgres-db
+
+  frontend:
+
+    build: ./frontend
+
+    container_name: innovatech-frontend
+
+    ports:
+      - "3000:3000"
+
+    environment:
+      REACT_APP_API_URL: http://localhost:8080/api
+
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
