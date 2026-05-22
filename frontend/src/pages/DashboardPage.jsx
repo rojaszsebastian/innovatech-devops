@@ -183,7 +183,7 @@ const DashboardPage = () => {
                 <div className="alert alert-warning border-0 shadow-sm p-4">
 
                     <h5 className="fw-bold">
-                        Aviso del Sistema 
+                        Aviso del Sistema  HOLA
                     </h5>
 
                     {error}
