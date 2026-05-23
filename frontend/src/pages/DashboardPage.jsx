@@ -139,7 +139,7 @@ const DashboardPage = () => {
                                 type="submit"
                                 className="btn btn-primary btn-lg w-100 fw-bold shadow-sm"
                             >
-                                ACTUALIZAR VISTA
+                                ACTUALIZAR
                             </button>
 
                         </div>
